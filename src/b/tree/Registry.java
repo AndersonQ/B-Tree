@@ -1,6 +1,6 @@
 package b.tree;
 
-public class Registry {
+public class Registry implements Comparable<Registry>{
 
 	int key;
 	
@@ -24,4 +24,21 @@ public class Registry {
 	{
 		
 	}
+
+	@Override
+	public int compareTo(Registry r2)
+	{
+			if(this.key > r2.getKey())
+			{
+				return 1;
+			}
+			else if (this.key < r2.getKey())
+			{
+				return -1;
+			}
+			else
+			{
+				return 0;
+			}
+	}	
 }
