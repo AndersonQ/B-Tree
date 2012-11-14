@@ -40,6 +40,48 @@ public class Page {
 		
 	}
 	
+	/**
+	 * Get the number of registers
+	 * @return the number of registers
+	 */
+	public int getNumRegs() {
+		return numRegs;
+	}
+
+	/**
+	 * Get the array of registers
+	 * @return
+	 */
+	public Registry[] getRegisters() {
+		return registers;
+	}
+	
+	/**
+	 * Get the key of a registry
+	 * It should return a error if i is bigger then registers.lenght()
+	 * @param i the index of the registry 
+	 * @return the key of registry i
+	 */
+	public int getRegistryKey(int i)
+	{
+		return registers[i].getKey();
+	}
+
+	public Page[] getChildren() {
+		return children;
+	}
+	
+	/**
+	 * Get a child page
+	 * It should return a error if i is bigger then children.length()
+	 * @param i the index of child page
+	 * @return the child page i
+	 */
+	public Page getChild(int i)
+	{
+		return children[i];
+	}
+
 	public Page getFather() {
 		return father;
 	}
