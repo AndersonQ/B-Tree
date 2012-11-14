@@ -2,7 +2,7 @@ package b.tree;
 
 public class Registry implements Comparable<Registry>{
 
-	int key;
+	private int key;
 	
 	public Registry(int key)
 	{
