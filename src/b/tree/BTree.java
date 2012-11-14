@@ -26,15 +26,18 @@ public class BTree {
 	 * Find a page
 	 * @param key
 	 */
-	//IT WAS NOT TESTED!!!!!!
 	// public void findB(int key, Page this.page, boolean this.found, int pos)
 	public void findB(int key) {
+		/* IT WAS NOT TESTED!!!!!!
+		 * there is a error here! it indexes pos from 1 to m...
+		 */
+		
 		int i, m;
 		
 		//Initialising variables
-		Page p = this.root;
 		this.page = null;
 		this.found = false;
+		Page p = this.root;
 		m = p.getNumRegs();
 		i = this.pos = 0;
 		
@@ -46,6 +49,7 @@ public class BTree {
 		while(p != null)
 		{
 			page = p;
+			i = pos = 1;
 			
 			while(i <= m)
 			{
