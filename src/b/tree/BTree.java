@@ -5,11 +5,11 @@ public class BTree {
 	/** The root of this tree */
 	Page root;
 	/** A temporary 'pointer' to keep where is the key */
-	Page page;
+	Page page; //pt
 	/** A boolean to indicate success or fail */
-	boolean found;
+	boolean found; //f
 	/** The position of the key in the page 'returned' by findB*/
-	int pos;
+	int pos; //g
 
 	public BTree() {
 
@@ -26,6 +26,7 @@ public class BTree {
 	 * Find a page
 	 * @param key
 	 */
+	//IT WAS NOT TESTED!!!!!!
 	// public void findB(int key, Page this.page, boolean this.found, int pos)
 	public void findB(int key) {
 		int i, m;
@@ -76,8 +77,21 @@ public class BTree {
 	 * Insert a registry in the tree
 	 * @param reg a registry to insert
 	 */
-	public void insertB(Registry reg) {
-
+	public void insertB(Registry reg) 
+	{
+		/* IT WAS NOT TESTED!!!!!!
+		 * and it is not complete!
+		 */
+		
+		//Look for the registry reg in the tree
+		//if there is NOT a registry reg, then this.found is false
+		findB(reg.getKey());
+		
+		//if reg was NOT found in this tree
+		if(!found)
+		{
+			page.insertReg(reg, pos);
+		}
 	}
 
 	/**
