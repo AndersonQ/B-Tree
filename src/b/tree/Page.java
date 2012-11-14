@@ -150,6 +150,17 @@ public class Page {
 	}
 	
 	/**
+	 * Insert a registry in a defined position, this method is called only if there is a empty
+	 * space in this page!
+	 * @param reg a registry to insert
+	 * @param i the position where to insert reg
+	 */
+	public void insertReg(Registry reg, int i)
+	{
+		registers[i] = reg;
+	}
+	
+	/**
 	 * Remove a registry and it returns the removed registry
 	 * @return the removed registry
 	 */
