@@ -3,6 +3,8 @@ package b.tree;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import exception.PageFull;
+
 public class Page {
 
 	/** Total number of registry */
@@ -146,20 +148,30 @@ public class Page {
 	}
 	
 	/**
-	 * Verify is this page is a leaf
+	 * Verify if this page is a leaf
 	 * @return true or false is this page is a leaf or not
 	 */
 	public boolean isLeaf()
 	{
 		return children[0] == null;
 	}
+	
 	/** 
-	 * Verify if this page is a leaf
+	 * Verify if this page has the maximum number of registries
 	 * @return true or false if this is full or not
 	 */
-	public boolean isFull()
+	public boolean isFullOfRegistries()
 	{
 		return (this.numRegs == (this.order * 2));
+	}
+	
+	/** 
+	 * Verify if this page has the maximum number of registries
+	 * @return true or false if this is full or not
+	 */
+	public boolean isFullOfPages()
+	{
+		return (this.numRegs == ((this.order * 2) + 1));
 	}
 	
 	/**
@@ -176,20 +188,16 @@ public class Page {
 	 * Insert a registry, this method is called only if there is a empty
 	 * space in this page!
 	 * @param reg a registry to insert
+	 * @throws Exception 
 	 */
-	public void insertReg(Registry reg)
+	public void insertReg(Registry reg) throws Exception
 	{
-		/*DEBUG
-		System.out.println("Page.insertReg(Registry reg): Inserting reg " + reg.toString());
-		System.out.print("Page.insertReg(Registry reg): before insert this.registries: ");
-		for(Registry r: registries)
-		{
-			System.out.print(r + ", ");
-		}
-		System.out.println();*/
+		//System.out.println("Page.insertReg(Registry reg): numRegs: " + this.numRegs);
+		if(this.numRegs == this.order * 2)
+			throw new PageFull(reg);
 		
 		registries[numRegs++] = reg;
-		
+
 		Arrays.sort(registries, new Comparator<Registry>()
 				{
 					@Override
@@ -226,40 +234,12 @@ public class Page {
 					}
 				});
 		
-		System.out.print("Page.insertReg(Registry reg): this.registries after sort: ");
+		System.out.print(": Page.insertReg(Registry reg): this.registries after sort: ");
 		for(Registry r: registries)
 		{
 			System.out.print(r + ", ");
 		}
 		System.out.println();
-		
-		//A more elegant way was used above
-		/*
-		 * How Array.sort doesn't work for a array with null objects
-		 * a short array will be created, ordered and after it will be filled
-		 * with null objects until get the original size
-		 *
-		int i = 0;
-		//Go until the last no null registry
-		while (registries[i] != null) i++;
-		//Creating a new short array
-		Registry[] shortone = new Registry [i];
-		
-		//Filling shortone
-		for(int j = 0; j < i; j++)
-		{
-			shortone[j] = registries[j];
-		}
-		
-		//Sort registers, class Registry implements Comparable
-		Arrays.sort(shortone);
-		
-		//Rebuilding registries
-		for(i = 0; i < shortone.length; i++)
-		{
-			registries[i] = shortone[i];
-		}*/
-
 	}
 	
 	/**
