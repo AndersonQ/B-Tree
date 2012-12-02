@@ -189,14 +189,13 @@ public class Page {
 		System.out.println();*/
 		
 		registries[numRegs++] = reg;
-	
-		Arrays.sort(registries);
-		/*Arrays.sort(registries, new Comparator<Registry>()
+		
+		Arrays.sort(registries, new Comparator<Registry>()
 				{
 					@Override
 					public int compare(Registry r1, Registry r2)
 					{
-						/*null registries are bigger then anyone*
+						/*null registries are bigger then anyone*/
 						//Both are null 
 						if(r1 == null && r2 == null)
 						{
@@ -225,7 +224,7 @@ public class Page {
 							return 0;
 						}
 					}
-				});*/
+				});
 		
 		System.out.print("Page.insertReg(Registry reg): this.registries after sort: ");
 		for(Registry r: registries)
@@ -246,6 +245,12 @@ public class Page {
 		//Creating a new short array
 		Registry[] shortone = new Registry [i];
 		
+		//Filling shortone
+		for(int j = 0; j < i; j++)
+		{
+			shortone[j] = registries[j];
+		}
+		
 		//Sort registers, class Registry implements Comparable
 		Arrays.sort(shortone);
 		
@@ -254,6 +259,7 @@ public class Page {
 		{
 			registries[i] = shortone[i];
 		}*/
+
 	}
 	
 	/**
