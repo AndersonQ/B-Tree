@@ -12,10 +12,14 @@ public class Test {
 		BTree btree = new BTree(2);
 		
 		Registry ret;
-		Registry[] regs = new Registry [2];
+		Registry[] regs = new Registry [4];
 		
-		regs[0] = new Registry(20);
-		regs[1] = new Registry(-30);
+		int j = regs.length;
+		for (int i = 0; i < regs.length; i++)
+		{
+			regs[i] = new Registry((j)*10);
+			j--;
+		}
 		
 		for (Registry r: regs)
 		{
