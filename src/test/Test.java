@@ -11,51 +11,33 @@ public class Test {
 	public static void main(String[] args) {
 		BTree btree = new BTree(2);
 		
-		Registry r1, r2;
+		Registry ret;
+		Registry[] regs = new Registry [2];
 		
-		r1 = new Registry(10);
-		r2 = new Registry(20);
+		regs[0] = new Registry(20);
+		regs[1] = new Registry(-30);
 		
-		System.out.println("Adding reg " + r1);
-		try
+		for (Registry r: regs)
 		{
-			btree.insert(r1);
-		}
-		catch (Exception e)
-		{
-			System.err.println(e.toString());
-			e.printStackTrace();
-		}
-		
-		System.out.println("Adding reg " + r2);
-		try
-		{
-			btree.insert(r2);
-		}
-		catch (Exception e)
-		{
-			System.err.println(e.toString());
-			e.printStackTrace();
+			System.out.println("Adding reg " + r);
+			try
+			{
+				btree.insert(r);
+			}
+			catch (Exception e)
+			{
+				System.err.println(e.toString());
+				e.printStackTrace();
+			}
 		}
 		
-		/*
-		System.out.println("Searching reg " + r1);
-		Registry ret = btree.find(r1);
-		System.out.println("Search result:  "+ ret);
-
-		
-		System.out.println("Adding reg " + r2);
-		try
+		System.out.println();
+		for (Registry r: regs)
 		{
-			btree.insert(r2);
+			System.out.println("Searching reg " + r);
+			ret = btree.find(r);
+			System.out.println("Search result:  "+ ret);
 		}
-		catch (Exception e)
-		{
-			System.err.println(e.toString());
-			e.printStackTrace();
-		}
-
-		System.out.println();*/
 	}
 
 }
