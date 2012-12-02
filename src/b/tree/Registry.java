@@ -4,6 +4,10 @@ public class Registry implements Comparable<Registry>{
 
 	private int key;
 	
+	/**
+	 * Create a new registry with a defined key
+	 * @param key
+	 */
 	public Registry(int key)
 	{
 		this.key = key;
@@ -40,5 +44,10 @@ public class Registry implements Comparable<Registry>{
 			{
 				return 0;
 			}
-	}	
+	}
+	
+	public String toString()
+	{
+		return String.format("%d", this.key);	
+	}
 }
