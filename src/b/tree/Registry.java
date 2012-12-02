@@ -32,7 +32,12 @@ public class Registry implements Comparable<Registry>{
 	@Override
 	public int compareTo(Registry r2)
 	{
-			if(this.key > r2.getKey())
+			/* null registries are bigger then anyone */
+			if(r2 == null)
+			{
+				return 1;
+			}
+			else if(this.key > r2.getKey())
 			{
 				return 1;
 			}
