@@ -49,7 +49,7 @@ public class BTree {
 		//Get all registries from p
 		Registry pageregistries[] = p.getRegistries();
 		//Look for reg in pages of p until find a page with registry bigger then reg
-		while( (i < p.getNumRegs()) && (reg.compareTo(pageregistries[i]) < 0) )
+		while( (i < p.getNumRegs()) && (reg.compareTo(pageregistries[i]) > 0) )
 		{
 			/* It only walk through array pageregistries, 
 			 * until find a registry with key bigger or equal to reg
