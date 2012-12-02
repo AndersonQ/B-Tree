@@ -15,11 +15,11 @@ public class Page {
 	private Page children[];
 	/** A pointer to father */
 	private Page father;
-	/** the order of this B-tree */
+	/** the order of this Page */
 	final int order;
 	
 	/**
-	 * Create a page to a B-tree with a order
+	 * Create root to a B-tree with a order
 	 * @param order the order of this page
 	 */
 	public Page(int order)
@@ -39,7 +39,34 @@ public class Page {
 		{
 			p = null;
 		}
+	}
+	
+	/**
+	 * Create a page to a B-tree with a order
+	 * @param the father of this new page
+	 * @throws Exception The argument must NOT be null!
+	 */
+	public Page(Page father) throws Exception
+	{
+		if (father == null)
+		{
+			throw new Exception("The argument must NOT be null!");
+		}
+		this.order = father.getOrder();
+		this.numRegs = 0;
+		this.registries = new Registry [2 * order];
+		this.children = new Page [2 * order + 1];
+		this.father = father;
 		
+		//Initialise arrays
+		for(Registry reg: registries)
+		{
+			reg = null;
+		}
+		for(Page p: children)
+		{
+			p = null;
+		}
 	}
 	
 	/**
@@ -111,6 +138,10 @@ public class Page {
 
 	public Page getFather() {
 		return father;
+	}
+	
+	public int getOrder() {
+		return order;
 	}
 	
 	/**
