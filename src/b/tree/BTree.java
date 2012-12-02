@@ -1,5 +1,7 @@
 package b.tree;
 
+import exception.PageFull;
+
 public class BTree {
 
 	/** The root of this tree */
@@ -87,38 +89,66 @@ public class BTree {
 	 * Insert a registry into the B-tree recursively
 	 * @param reg reg a registry to insert
 	 * @param p the page where try to insert reg
-	 * @throws Exception
+	 * @throws Exception Registry already exist!
 	 */
 	public void insert(Registry reg, Page p) throws Exception
 	{
-		//This index will be used outside of 'for'
-		int i;
-		//Searching where insert reg in page
-		for(i = 0; i < p.getNumRegs(); i++)
+		//This index will be used in all method
+		int i = 0;
+		//Keep the father of p
+		Page father = p;
+
+		while(p != null)
 		{
-			//If the registry to be inserted already exist, throws exception 
-			if(reg.compareTo(p.getRegistry(i)) == 0)
+			//Searching where insert reg
+			for(i = 0; i < p.getNumRegs(); i++)
 			{
-				throw new Exception(String.format("Registry with key " + reg.getKey() + " already exist!"));
+				//If the registry to be inserted already exist, throws exception
+				if(reg.compareTo(p.getRegistry(i)) == 0)
+				{
+					throw new Exception(String.format("Registry with key " + reg.getKey() + " already exist!"));
+				}
+				//If it found a registry bigger then reg, so insert reg in page previous the bigger registry
+				else if(reg.compareTo(p.getRegistry(i)) > 0)
+				{
+					//Skip the loop to insert reg
+					break;
+				}
 			}
-			//If it found a registry bigger then reg, so insert reg in page previous the bigger registry 
-			else if((p.getRegistry(i)).compareTo(reg) > 0)
+			
+			//If p is a Leaf, then try insert reg into p
+			if(p.isLeaf())
 			{
-				//Skip the loop to insert reg
 				break;
+			}
+			//other wise, look for a leaf to insert reg
+			else
+			{
+				father = p;
+				p = p.getChild(i);
 			}
 		}
 		
-		//There is a empty place to insert reg
-		if(p.getChild(i) == null)
+		//Trying to insert, if the page is full, split it!
+		try
 		{
-			p.insertReg(reg);
+			father.insertReg(reg);
 		}
-		//other wise, look for a place to insert reg in a deeper page 
-		else
+		catch(PageFull e)
 		{
-			insert(reg, p.getChild(i));
+			System.out.println("\nSplitting...");
+			split(p, reg);
 		}
+	}
+	
+	/**
+	 * Splits a page to insert a registry
+	 * @param p a page to be split
+	 * @param r the registry to insert
+	 */
+	private void split(Page p, Registry r)
+	{
+
 	}
 	
 	/**
