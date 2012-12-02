@@ -8,7 +8,7 @@ public class Page {
 	/** Total number of registry */
 	private int numRegs;
 	/** Array to storage registers */
-	private Registry registers[];
+	private Registry registries[];
 	/** Array to storage children */
 	private Page children[];
 	/** A pointer to father */
@@ -24,12 +24,12 @@ public class Page {
 	{
 		this.order = order;
 		this.numRegs = 0;
-		this.registers = new Registry [2 * order];
+		this.registries = new Registry [2 * order];
 		this.children = new Page [2 * order + 1];
 		this.father = null;
 		
 		//Initialise arrays
-		for(Registry reg: registers)
+		for(Registry reg: registries)
 		{
 			reg = null;
 		}
@@ -41,30 +41,50 @@ public class Page {
 	}
 	
 	/**
-	 * Get the number of registers
-	 * @return the number of registers
+	 * Get the number of registries
+	 * @return the number of registries
 	 */
 	public int getNumRegs() {
 		return numRegs;
+	}
+	
+	/**
+	 * Set the number of registries
+	 * @param n new number of registries
+	 */
+	public void setNumRegs(int n)
+	{
+		numRegs = n;
 	}
 
 	/**
 	 * Get the array of registers
 	 * @return
 	 */
-	public Registry[] getRegisters() {
-		return registers;
+	public Registry[] getRegistries() {
+		return registries;
+	}
+	
+	/**
+	 * Get the registry i
+	 * TODO It should return a error if i is bigger then registers.lenght()
+	 * @param i
+	 * @return
+	 */
+	public Registry getRegistry(int i)
+	{
+		return registries[i];
 	}
 	
 	/**
 	 * Get the key of a registry
-	 * It should return a error if i is bigger then registers.lenght()
+	 * TODO It should return a error if i is bigger then registries.lenght()
 	 * @param i the index of the registry 
 	 * @return the key of registry i
 	 */
 	public int getRegistryKey(int i)
 	{
-		return registers[i].getKey();
+		return registries[i].getKey();
 	}
 
 	public Page[] getChildren() {
@@ -81,9 +101,24 @@ public class Page {
 	{
 		return children[i];
 	}
+	
+	public void setChild(int i, Page p)
+	{
+		children[i] = p;
+	}
 
 	public Page getFather() {
 		return father;
+	}
+	
+	/**
+	 * Insert a page in a position
+	 * @param page the page to be inserted
+	 * @param pos the position to insert the page
+	 */
+	public void insertPage(Page page, int pos)
+	{
+		children[pos] = page;
 	}
 
 	public void setFather(Page father) {
@@ -144,9 +179,80 @@ public class Page {
 	 */
 	public void insertReg(Registry reg)
 	{
-		registers[numRegs++] = reg;
+		/*DEBUG
+		System.out.println("Page.insertReg(Registry reg): Inserting reg " + reg.toString());
+		System.out.print("Page.insertReg(Registry reg): before insert this.registries: ");
+		for(Registry r: registries)
+		{
+			System.out.print(r + ", ");
+		}
+		System.out.println();*/
+		
+		registries[numRegs++] = reg;
+	
+		Arrays.sort(registries, new Comparator<Registry>()
+				{
+					@Override
+					public int compare(Registry r1, Registry r2)
+					{
+						/*null registries are bigger then anyone*/
+						//Both are null 
+						if(r1 == null && r2 == null)
+						{
+							return 0;
+						}
+						//r2 is null, so r2 is bigger than r1
+						else if(r2 == null)
+						{
+							return -1;
+						}
+						//r1 is null, so r1 is bigger then r1
+						else if(r1 == null)
+						{
+							return 1;
+						}
+						else if(r1.getKey() > r2.getKey())
+						{
+							return 1;
+						}
+						else if(r1.getKey() < r2.getKey())
+						{
+							return -1;
+						}
+						else
+						{
+							return 0;
+						}
+					}
+				});
+		
+		System.out.print("Page.insertReg(Registry reg): this.registries after sort: ");
+		for(Registry r: registries)
+		{
+			System.out.print(r + ", ");
+		}
+		System.out.println();
+		
+		//A more elegant way was used above
+		/*
+		 * How Array.sort doesn't work for a array with null objects
+		 * a short array will be created, ordered and after it will be filled
+		 * with null objects until get the original size
+		 *
+		int i = 0;
+		//Go until the last no null registry
+		while (registries[i] != null) i++;
+		//Creating a new short array
+		Registry[] shortone = new Registry [i];
+		
 		//Sort registers, class Registry implements Comparable
-		Arrays.sort(registers);
+		Arrays.sort(shortone);
+		
+		//Rebuilding registries
+		for(i = 0; i < shortone.length; i++)
+		{
+			registries[i] = shortone[i];
+		}*/
 	}
 	
 	/**
@@ -157,7 +263,8 @@ public class Page {
 	 */
 	public void insertReg(Registry reg, int i)
 	{
-		registers[i] = reg;
+		registries[i] = reg;
+		numRegs++;
 	}
 	
 	/**
@@ -167,7 +274,6 @@ public class Page {
 	public Registry removeReg()
 	{
 		return null;
-		
 	}
 	
 	/**
