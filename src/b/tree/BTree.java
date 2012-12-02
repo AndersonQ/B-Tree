@@ -34,22 +34,22 @@ public class BTree {
 	/**
 	 * Find a registry recursively
 	 * @param reg a registry to look for
-	 * @param page a page where look for reg
+	 * @param p a page where look for reg
 	 * @return the registry or null if it was not found
 	 */
-	private Registry find(Registry reg, Page page)
+	private Registry find(Registry reg, Page p)
 	{
 		//Page not found!
-		if(page == null)
+		if(p == null)
 		{
 			return null;
 		}
 
 		int i = 0;
-		//Get all registries  from page
-		Registry pageregistries[] = page.getRegistries();
-		//Look for reg in pages of page until find a page with registry bigger then reg
-		while( (i < page.getNumRegs()) && (reg.compareTo(pageregistries[i]) < 0) )
+		//Get all registries from p
+		Registry pageregistries[] = p.getRegistries();
+		//Look for reg in pages of p until find a page with registry bigger then reg
+		while( (i < p.getNumRegs()) && (reg.compareTo(pageregistries[i]) < 0) )
 		{
 			/* It only walk through array pageregistries, 
 			 * until find a registry with key bigger or equal to reg
@@ -61,15 +61,15 @@ public class BTree {
 		{
 			return pageregistries[i];
 		}
-		//If reg is lower then pageregistries[i], go search into page[i] 
+		//If reg is lower then pageregistries[i], go search into p[i] 
 		else if(reg.compareTo(pageregistries[i]) < 0)
 		{
-			return find(reg, page.getChild(i));
+			return find(reg, p.getChild(i));
 		}
-		//Other wise, go search in page[i+1]
+		//Other wise, go search in p[i+1]
 		else
 		{
-			return find(reg, page.getChild(i + 1));
+			return find(reg, p.getChild(i + 1));
 		}
 	}
 	
