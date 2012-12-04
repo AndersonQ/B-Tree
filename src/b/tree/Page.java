@@ -9,6 +9,8 @@ public class Page {
 
 	/** Total number of registry */
 	private int numRegs;
+	/** Total number of pages */
+	private int numPages;
 	/** Array to storage registers */
 	private Registry registries[];
 	/** Array to storage children */
@@ -26,6 +28,7 @@ public class Page {
 	{
 		this.order = order;
 		this.numRegs = 0;
+		this.numPages = 0;
 		this.registries = new Registry [2 * order];
 		this.children = new Page [2 * order + 1];
 		this.father = null;
@@ -54,6 +57,7 @@ public class Page {
 		}
 		this.order = father.getOrder();
 		this.numRegs = 0;
+		this.numPages = 0;
 		this.registries = new Registry [2 * order];
 		this.children = new Page [2 * order + 1];
 		this.father = father;
@@ -69,6 +73,14 @@ public class Page {
 		}
 	}
 	
+	/**
+	 * Get the number of pages
+	 * @return the number of pages
+	 */
+	public int getNumPages() {
+		return numPages;
+	}
+
 	/**
 	 * Get the number of registries
 	 * @return the number of registries
@@ -144,6 +156,16 @@ public class Page {
 		return order;
 	}
 	
+	public void insertPage(Page p) throws PageFull
+	{
+		if(this.numPages == this.order*2 + 1)
+			throw new PageFull(p);
+		
+		children[this.numPages++] = p;
+		
+		Arrays.sort(children, new ComparePages());
+	}
+	
 	/**
 	 * Insert a page in a position
 	 * @param page the page to be inserted
@@ -165,7 +187,7 @@ public class Page {
 	 */
 	public void catChild(Page child, int poschild)
 	{
-		
+
 	}
 	
 	/** 
