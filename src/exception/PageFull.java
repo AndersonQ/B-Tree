@@ -1,5 +1,6 @@
 package exception;
 
+import b.tree.Page;
 import b.tree.Registry;
 
 public class PageFull extends Exception {
@@ -17,6 +18,11 @@ public class PageFull extends Exception {
 	public PageFull(Registry r)
 	{
 		super(String.format("When tried to insert registry %s", r.toString()));
+	}
+	
+	public PageFull(Page p)
+	{
+		super(String.format("When tried to insert page %s", p.toString()));
 	}
 	
 	public PageFull(String s)
