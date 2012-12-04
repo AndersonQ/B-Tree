@@ -1,5 +1,8 @@
 package b.tree;
 
+import java.util.Arrays;
+
+import exception.NullFather;
 import exception.PageFull;
 
 public class BTree {
@@ -137,7 +140,7 @@ public class BTree {
 		catch(PageFull e)
 		{
 			System.out.println("\nSplitting...");
-			split(p, reg);
+			split(father, reg);
 		}
 	}
 	
@@ -146,9 +149,134 @@ public class BTree {
 	 * @param p a page to be split
 	 * @param r the registry to insert
 	 */
+	//TODO: implement a split into a split
 	private void split(Page p, Registry r)
 	{
+		//Number of registries in a page + 1 */
+		int nregs = p.getOrder() * 2 + 1;
+		//To store registries from p and the new one
+		Registry[] regs = new Registry[nregs];
+		//The middle of regs
+		int middle = (int) Math.floor((nregs)/2f);
+		//The middle registry
+		Registry mreg = null;
+		//New pages that will be created
+		Page n1 = null, n2 = null;
+		
+		//DEBUG
+		System.out.println("\nPage.split(): nregs " + nregs + " middle " + middle);
+		
+		//Put all registries from p into regs
+		for(int i = 0; i < p.getNumRegs(); i++)
+			regs[i] = p.getRegistry(i);
+		//Put r in the last position of regs
+		regs[nregs - 1] = r;
+		
+		//Sort regs
+		Arrays.sort(regs);
+		
+		/* Creating new tow pages */
+		//Middle registry, it will go to page above
+		mreg = regs[middle];
+		//removing mreg from regs
+		regs[middle] = null;
+		//Sorting regs
+		Arrays.sort(regs, new CompareRegistries());
+		
+		//Creating new pages, them father is the same as p
+		try {
+			n1 = new Page(p.getFather());
+			n2 = new Page(p.getFather());
+		}
+		/* If a NullFather was thrown, 
+		 * it means that p is the root of this tree!
+		 * and it was thrown by 'n1 = new Page(p.getFather());',
+		 * so n2 still being null!
+		 * Then create a new root!
+		 */
+		catch (NullFather e1) {
+			//Creating a new root
+			Page newroot = new Page(p.getOrder());
+			this.root.setFather(newroot);
+			try
+			{
+				//Putting new pages into new root
+				newroot.insertPage(n1);
+				newroot.insertPage(n2);
+				
+				//Creating new pages with nweroot as father
+				n1 = new Page(newroot);
+				n2 = new Page(newroot);
+			}
+			catch(PageFull e2)
+			{
+				e2.printStackTrace();
+			}
+			/* if it happens, newroot is null, 
+			 * so we have a big problem! 
+			 * Because it should never happens!
+			 */
+			catch (NullFather e) {
+				System.err.println("BTree.splitsplit(Page p, Registry r): newroot is null, it is a BIG problem!");
+				e.printStackTrace();
+			}
+		}
+		
+		//Putting registries into new pages
+		try
+		{
+			for(int i = 0; i < middle; i++)
+				n1.insertReg(regs[i]);
+			for(int i = middle; i < nregs - 1; i++)
+				n2.insertReg(regs[i]);
+		} 
+		catch (PageFull e)
+		{
+			System.err.println("Must slipt during a split!!!!");
+			System.out.println("TODO: IMPLEMENT IT!!");
+			System.err.flush();
+			e.printStackTrace();
+			System.exit(1);
+		}
 
+		/* Insert the middle registry into p.father
+		 * if it was not possible, split father.
+		 */
+		try
+		{
+			p.getFather().insertReg(mreg);
+		}
+		catch(PageFull e)
+		{
+			System.err.println("Must slipt father during a split!!!!");
+			System.out.println("TODO: IMPLEMENT IT!!");
+			System.err.flush();
+			e.printStackTrace();
+			System.exit(1);
+		}
+		/* 
+		 * I do not remember why I caught NullPinterException...
+		 * It was because I understood that it happened when
+		 * the page that is been split is a root, but now
+		 * it does not make sense...
+		 */
+		catch (NullPointerException e)
+		{
+			/*
+			//Creating a new root
+			Page newroot = new Page(p.getOrder());
+			this.root.setFather(newroot);
+			try
+			{
+				newroot.insertPage(n1);
+				newroot.insertPage(n2);
+			}
+			catch(PageFull e1)
+			{
+				e1.printStackTrace();
+			}*/
+			e.printStackTrace();
+		}catch (Exception e) {e.printStackTrace();}
 	}
 	
 	/**
