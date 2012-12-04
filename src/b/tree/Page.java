@@ -221,7 +221,7 @@ public class Page {
 	 * @param reg a registry to insert
 	 * @throws Exception 
 	 */
-	public void insertReg(Registry reg) throws Exception
+	public void insertReg(Registry reg) throws PageFull
 	{
 		//System.out.println("Page.insertReg(Registry reg): numRegs: " + this.numRegs);
 		if(this.numRegs == this.order * 2)
