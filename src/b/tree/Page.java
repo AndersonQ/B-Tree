@@ -3,6 +3,7 @@ package b.tree;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import exception.NullFather;
 import exception.PageFull;
 
 public class Page {
@@ -49,11 +50,11 @@ public class Page {
 	 * @param the father of this new page
 	 * @throws Exception The argument must NOT be null!
 	 */
-	public Page(Page father) throws Exception
+	public Page(Page father) throws NullFather
 	{
 		if (father == null)
 		{
-			throw new Exception("The argument must NOT be null!");
+			throw new NullFather();
 		}
 		this.order = father.getOrder();
 		this.numRegs = 0;
