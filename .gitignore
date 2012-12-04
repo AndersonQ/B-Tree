@@ -1,1 +1,7 @@
 bin/
+.gitignore
+.classpath
+.project
+.settings/
+Page.lixo
+
