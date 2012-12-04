@@ -229,41 +229,7 @@ public class Page {
 		
 		registries[numRegs++] = reg;
 
-		Arrays.sort(registries, new Comparator<Registry>()
-				{
-					@Override
-					public int compare(Registry r1, Registry r2)
-					{
-						/*null registries are bigger then anyone*/
-						//Both are null 
-						if(r1 == null && r2 == null)
-						{
-							return 0;
-						}
-						//r2 is null, so r2 is bigger than r1
-						else if(r2 == null)
-						{
-							return -1;
-						}
-						//r1 is null, so r1 is bigger then r1
-						else if(r1 == null)
-						{
-							return 1;
-						}
-						else if(r1.getKey() > r2.getKey())
-						{
-							return 1;
-						}
-						else if(r1.getKey() < r2.getKey())
-						{
-							return -1;
-						}
-						else
-						{
-							return 0;
-						}
-					}
-				});
+		Arrays.sort(registries, new CompareRegistries());
 		
 		System.out.print(": Page.insertReg(Registry reg): this.registries after sort: ");
 		for(Registry r: registries)
