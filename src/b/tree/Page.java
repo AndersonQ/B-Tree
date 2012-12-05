@@ -254,12 +254,13 @@ public class Page {
 
 		Arrays.sort(registries, new CompareRegistries());
 		
-		System.out.print("Page.insertReg(Registry " + reg + " ): this.registries after sort: ");
+		/*DEBUG
+		 * System.out.print("Page.insertReg(Registry " + reg + " ): this.registries after sort: ");
 		for(Registry r: registries)
 		{
 			System.out.print(r + ", ");
 		}
-		System.out.println();
+		System.out.println();*/
 	}
 	
 	/**
@@ -301,7 +302,7 @@ public class Page {
 
 		for(Registry r: registries)
 		{
-			buff.append(r.toString());
+			buff.append(r);
 			buff.append(", ");
 		}
 
