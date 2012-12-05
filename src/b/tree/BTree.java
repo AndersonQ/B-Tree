@@ -242,6 +242,8 @@ public class BTree {
 			}
 			catch(PageFull e2)
 			{
+				System.err.println(" line 243: catch(PageFull e2)");
+				System.err.flush();
 				e2.printStackTrace();
 			}
 			/* if it happens, newroot is null, 
@@ -254,8 +256,10 @@ public class BTree {
 			}
 			//Setting BTree.root as newroot
 			this.root = newroot;
-		} catch (PageFull e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (PageFull e) 
+		{//TODO SONVING SLPIT
+			this.split(father, r);
 			e.printStackTrace();
 		}
 		
@@ -270,7 +274,7 @@ public class BTree {
 		catch (PageFull e)
 		{
 			System.err.println("Must slipt during a split!!!!");
-			System.out.println("TODO: IMPLEMENT IT!!");
+			System.err.println("TODO: IMPLEMENT IT!!");
 			System.err.flush();
 			e.printStackTrace();
 			System.exit(1);
@@ -285,8 +289,9 @@ public class BTree {
 		}
 		catch(PageFull e)
 		{
+			//TODO SOLVE IT AFTRE
 			System.err.println("Must slipt father during a split!!!!");
-			System.out.println("TODO: IMPLEMENT IT!!");
+			System.err.println("TODO: IMPLEMENT IT!!");
 			System.err.flush();
 			e.printStackTrace();
 			System.exit(1);
