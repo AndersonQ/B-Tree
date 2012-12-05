@@ -7,12 +7,13 @@ public class Test {
 
 	/**
 	 * @param args
+	 * @throws Exception 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		BTree btree = new BTree(2);
 		
 		Registry ret;
-		Registry[] regs = new Registry [4];
+		Registry[] regs = new Registry [5];
 		
 		int j = regs.length;
 		for (int i = 0; i < regs.length; i++)
@@ -23,7 +24,7 @@ public class Test {
 		
 		for (Registry r: regs)
 		{
-			System.out.println("Adding reg " + r);
+			System.out.print("Adding reg " + r);
 			try
 			{
 				btree.insert(r);
