@@ -197,15 +197,12 @@ public class BTree {
 		
 		//Creating new pages, them father is the same as p
 		try {
-			/* Erase all registries stored in p
-			 * they will be replaced
-			 */
+			// Erases all registries stored in p they will be replaced
 			p.eraseRegistries();
 			
-//			n1 = new Page(father);
+			//One of the new pages is the page p
 			n1 = p;
 			n2 = new Page(father);
-//			father.insertPage(n1);
 			father.insertPage(n2);
 		}
 		/* If a NullFather was thrown, 
@@ -223,8 +220,9 @@ public class BTree {
 			father = newroot;
 			try
 			{
-				//Creating new pages with newroot as father
-				n1 = new Page(newroot);
+				//Setting newroot as n1 father
+				n1.setFather(newroot);
+				//Creating new page with newroot as father
 				n2 = new Page(newroot);
 				
 				//Putting new pages into new root
