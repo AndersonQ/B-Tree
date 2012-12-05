@@ -139,8 +139,8 @@ public class Page {
 	 */
 	public void eraseRegistries()
 	{
-		for(Registry r: registries)
-			r = null;
+		for(int i = 0; i < this.numRegs; i++)
+			this.registries[i] = null;
 		this.numRegs = 0;
 	}
 	
