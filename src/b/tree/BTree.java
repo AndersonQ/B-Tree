@@ -112,13 +112,12 @@ public class BTree {
 					throw new Exception(String.format("Registry with key " + reg.getKey() + " already exist!"));
 				}
 				//If it found a registry bigger then reg, so insert reg in page previous the bigger registry
-				else if(reg.compareTo(p.getRegistry(i)) > 0)
+				else if(reg.compareTo(p.getRegistry(i)) < 0)
 				{
 					//Skip the loop to insert reg
 					break;
 				}
 			}
-			
 			//If p is a Leaf, then try insert reg into p
 			if(p.isLeaf())
 			{
@@ -220,6 +219,12 @@ public class BTree {
 			father = newroot;
 			try
 			{
+				// Erases all registries stored in p they will be replaced
+				p.eraseRegistries();
+				
+				//One of the new pages is the page p
+				n1 = p;
+				
 				//Setting newroot as n1 father
 				n1.setFather(newroot);
 				//Creating new page with newroot as father
