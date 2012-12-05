@@ -290,4 +290,18 @@ public class Page {
 	{
 		
 	}
+
+	public String toString()
+	{
+		//A buffer to build string that will be returned
+		StringBuilder buff = new StringBuilder();
+
+		for(Registry r: registries)
+		{
+			buff.append(r.toString());
+			buff.append(", ");
+		}
+
+		return buff.toString();
+	}
 }
