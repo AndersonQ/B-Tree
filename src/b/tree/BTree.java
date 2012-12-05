@@ -44,6 +44,7 @@ public class BTree {
 	 */
 	private Registry find(Registry reg, Page p)
 	{
+//		System.out.println("find(Registry " + reg + ", Page " + p + ")");
 		//Page not found!
 		if(p == null)
 		{
@@ -69,6 +70,7 @@ public class BTree {
 		//Other wise, go search in p[i]
 		else
 		{
+//			System.out.println("\tCalling recursively from p " + p.toString() + " to " + "p.getChild("+ i + ") " + p.getChild(i));
 			return find(reg, p.getChild(i));
 		}
 	}
@@ -95,6 +97,9 @@ public class BTree {
 		int i = 0;
 		//Keep the father of p
 		Page father = p;
+		
+		//DEBUG
+//		System.out.println("insert(Registry " + reg + ",  Page " + p.toString() + ")");
 
 		while(p != null)
 		{
@@ -117,6 +122,9 @@ public class BTree {
 			//If p is a Leaf, then try insert reg into p
 			if(p.isLeaf())
 			{
+				//DEBUG
+//				System.out.println("Page " + p.toString() + " is a leaf, inserting " + reg + " here");
+				father = p;
 				break;
 			}
 			//other wise, look for a leaf to insert reg
@@ -131,9 +139,12 @@ public class BTree {
 		try
 		{
 			father.insertReg(reg);
+			//DEBUG
+//			System.out.println("After insert: " + father.toString());
 		}
 		catch(PageFull e)
 		{
+			//DEBUG
 			System.out.println("\nSplitting...");
 			split(father, reg);
 		}
@@ -161,7 +172,8 @@ public class BTree {
 		Page father = p.getFather();
 		
 		//DEBUG
-		System.out.print("\nPage.split(): nregs " + nregs + " middle " + middle);
+		System.out.print("Page.split(Page " + p.toString() + "Registry " + r.toString() + "): ");
+		System.out.print("nregs " + nregs + ", middle.index " + middle);
 		
 		//Put all registries from p into regs
 		for(int i = 0; i < p.getNumRegs(); i++)
@@ -173,7 +185,7 @@ public class BTree {
 		Arrays.sort(regs);
 		
 		//DEBUG
-		System.out.println(": " + regs[middle]);
+		System.out.println(", middle.value " + regs[middle]);
 		
 		/* Creating new tow pages */
 		//Middle registry, it will go to page above
@@ -185,8 +197,16 @@ public class BTree {
 		
 		//Creating new pages, them father is the same as p
 		try {
-			n1 = new Page(father);
+			/* Erase all registries stored in p
+			 * they will be replaced
+			 */
+			p.eraseRegistries();
+			
+//			n1 = new Page(father);
+			n1 = p;
 			n2 = new Page(father);
+//			father.insertPage(n1);
+			father.insertPage(n2);
 		}
 		/* If a NullFather was thrown, 
 		 * it means that p is the root of this tree!
@@ -225,6 +245,9 @@ public class BTree {
 			}
 			//Setting BTree.root as newroot
 			this.root = newroot;
+		} catch (PageFull e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		//Putting registries into new pages
@@ -282,6 +305,12 @@ public class BTree {
 			}*/
 			e.printStackTrace();
 		}catch (Exception e) {e.printStackTrace();}
+		
+		//DEBUG
+		System.out.println("father: " + father.toString());
+		System.out.println("newpage1: " + n1.toString());
+		System.out.println("newpage2: " + n2.toString());
+		System.out.println();
 	}
 	
 	/**
@@ -297,5 +326,10 @@ public class BTree {
 	 */
 	public void listInOrder() {
 
-	}	
+	}
+	
+	public String toString()
+	{
+		return this.root.toStringChildren();
+	}
 }
