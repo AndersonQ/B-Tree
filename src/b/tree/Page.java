@@ -134,6 +134,17 @@ public class Page {
 	}
 	
 	/**
+	 * Erase all registries from
+	 * this page.
+	 */
+	public void eraseRegistries()
+	{
+		for(Registry r: registries)
+			r = null;
+		this.numRegs = 0;
+	}
+	
+	/**
 	 * Get a child page
 	 * It should return a error if i is bigger then children.length()
 	 * @param i the index of child page
