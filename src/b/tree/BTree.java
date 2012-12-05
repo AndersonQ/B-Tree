@@ -162,6 +162,8 @@ public class BTree {
 		Registry mreg = null;
 		//New pages that will be created
 		Page n1 = null, n2 = null;
+		//The p's father
+		Page father = p.getFather();
 		
 		//DEBUG
 		System.out.print("\nPage.split(): nregs " + nregs + " middle " + middle);
@@ -188,8 +190,8 @@ public class BTree {
 		
 		//Creating new pages, them father is the same as p
 		try {
-			n1 = new Page(p.getFather());
-			n2 = new Page(p.getFather());
+			n1 = new Page(father);
+			n2 = new Page(father);
 		}
 		/* If a NullFather was thrown, 
 		 * it means that p is the root of this tree!
@@ -200,6 +202,10 @@ public class BTree {
 		catch (NullFather e1) {
 			//Creating a new root
 			Page newroot = new Page(p.getOrder());
+			/* Set variable 'father' to the father of new pages,
+			 * it means, set 'father' as new root
+			 */
+			father = newroot;
 			try
 			{
 				//Creating new pages with newroot as father
@@ -248,7 +254,7 @@ public class BTree {
 		 */
 		try
 		{
-			p.getFather().insertReg(mreg);
+			father.insertReg(mreg);
 		}
 		catch(PageFull e)
 		{
