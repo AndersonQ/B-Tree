@@ -176,7 +176,6 @@ public class BTree {
 		Arrays.sort(regs);
 		
 		//DEBUG
-		//DEBUG
 		System.out.println(": " + regs[middle]);
 		
 		/* Creating new tow pages */
@@ -195,22 +194,21 @@ public class BTree {
 		/* If a NullFather was thrown, 
 		 * it means that p is the root of this tree!
 		 * and it was thrown by 'n1 = new Page(p.getFather());',
-		 * so n2 still being null!
+		 * so n1 and n2 still being null!
 		 * Then create a new root!
 		 */
 		catch (NullFather e1) {
 			//Creating a new root
 			Page newroot = new Page(p.getOrder());
-			this.root.setFather(newroot);
 			try
 			{
+				//Creating new pages with newroot as father
+				n1 = new Page(newroot);
+				n2 = new Page(newroot);
+				
 				//Putting new pages into new root
 				newroot.insertPage(n1);
 				newroot.insertPage(n2);
-				
-				//Creating new pages with nweroot as father
-				n1 = new Page(newroot);
-				n2 = new Page(newroot);
 			}
 			catch(PageFull e2)
 			{
