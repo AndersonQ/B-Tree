@@ -53,7 +53,7 @@ public class BTree {
 		int i = 0;
 		//Get all registries from p
 		Registry pageregistries[] = p.getRegistries();
-		//Look for reg in pages of p until find a page with registry bigger then reg
+		//Look for reg in pages of p until find a registry bigger then reg
 		while( (i < p.getNumRegs()) && (reg.compareTo(pageregistries[i]) > 0) )
 		{
 			/* It only walk through array pageregistries, 
@@ -66,15 +66,10 @@ public class BTree {
 		{
 			return pageregistries[i];
 		}
-		//If reg is lower then pageregistries[i], go search into p[i] 
-		else if(reg.compareTo(pageregistries[i]) < 0)
-		{
-			return find(reg, p.getChild(i));
-		}
-		//Other wise, go search in p[i+1]
+		//Other wise, go search in p[i]
 		else
 		{
-			return find(reg, p.getChild(i + 1));
+			return find(reg, p.getChild(i));
 		}
 	}
 	
