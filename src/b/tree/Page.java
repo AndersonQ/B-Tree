@@ -159,10 +159,13 @@ public class Page {
 	
 	public void insertPage(Page p) throws PageFull
 	{
+		System.out.print("insertPage(Page " + p + "): ");
 		if(this.numPages == this.order*2 + 1)
 			throw new PageFull(p);
 		
 		children[this.numPages++] = p;
+		
+		System.out.println("inserted in children[" + (this.numPages - 1) + "]");
 		
 		Arrays.sort(children, new ComparePages());
 	}
@@ -304,6 +307,36 @@ public class Page {
 		{
 			buff.append(r);
 			buff.append(", ");
+		}
+
+		return buff.toString();
+	}
+	
+	/**
+	 * Creates a string with all children and its registries stored in this page
+	 * @return
+	 */
+	public String toStringChildren()
+	{
+		//A buffer to build string that will be returned
+		StringBuilder buff = new StringBuilder();
+		StringBuilder bl = new StringBuilder();
+
+		for(Registry r: registries)
+		{
+			buff.append(r);
+			buff.append(", ");
+		}
+		buff.append("\n");
+		bl.append("\t");
+		
+		for(int i = 0; i < this.numPages; i++)
+		{
+			Page p = children[i];
+			buff.append(bl.toString());
+			buff.append(String.format("page %d : ", i));
+			buff.append(p.toString());
+			buff.append("\n");
 		}
 
 		return buff.toString();
