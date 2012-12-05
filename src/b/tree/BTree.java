@@ -164,7 +164,7 @@ public class BTree {
 		Page n1 = null, n2 = null;
 		
 		//DEBUG
-		System.out.println("\nPage.split(): nregs " + nregs + " middle " + middle);
+		System.out.print("\nPage.split(): nregs " + nregs + " middle " + middle);
 		
 		//Put all registries from p into regs
 		for(int i = 0; i < p.getNumRegs(); i++)
@@ -174,6 +174,10 @@ public class BTree {
 		
 		//Sort regs
 		Arrays.sort(regs);
+		
+		//DEBUG
+		//DEBUG
+		System.out.println(": " + regs[middle]);
 		
 		/* Creating new tow pages */
 		//Middle registry, it will go to page above
@@ -220,6 +224,8 @@ public class BTree {
 				System.err.println("BTree.splitsplit(Page p, Registry r): newroot is null, it is a BIG problem!");
 				e.printStackTrace();
 			}
+			//Setting BTree.root as newroot
+			this.root = newroot;
 		}
 		
 		//Putting registries into new pages
