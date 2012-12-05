@@ -291,6 +291,9 @@ public class Page {
 		
 	}
 
+	/**
+	 * Creates a string with all registries stored in this page
+	 */
 	public String toString()
 	{
 		//A buffer to build string that will be returned
