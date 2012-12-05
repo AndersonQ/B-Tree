@@ -55,7 +55,7 @@ public class BTree {
 		//Get all registries from p
 		Registry pageregistries[] = p.getRegistries();
 		//Look for reg in pages of p until find a registry bigger then reg
-		while( (i < p.getNumRegs()) && (reg.compareTo(pageregistries[i]) > 0) )
+		while( (i < p.getNumRegs() - 1) && (reg.compareTo(pageregistries[i]) > 0) )
 		{
 			/* It only walk through array pageregistries, 
 			 * until find a registry with key bigger or equal to reg
@@ -67,11 +67,17 @@ public class BTree {
 		{
 			return pageregistries[i];
 		}
-		//Other wise, go search in p[i]
-		else
+		//If reg in lower then pageregistries[i], go to search in p[i]
+		else if (reg.compareTo(pageregistries[i]) < 0)
 		{
 //			System.out.println("\tCalling recursively from p " + p.toString() + " to " + "p.getChild("+ i + ") " + p.getChild(i));
 			return find(reg, p.getChild(i));
+		}
+		//Other wise, go to search in p[i + ]
+		else //if (reg.compareTo(pageregistries[i]) > 0)
+		{
+//			System.out.println("\tCalling recursively from p " + p.toString() + " to " + "p.getChild("+ i + ") " + p.getChild(i));
+			return find(reg, p.getChild(i + 1));
 		}
 	}
 	
@@ -314,6 +320,7 @@ public class BTree {
 		System.out.println("newpage1: " + n1.toString());
 		System.out.println("newpage2: " + n2.toString());
 		System.out.println();
+//		System.out.println(this.toString());
 	}
 	
 	/**
